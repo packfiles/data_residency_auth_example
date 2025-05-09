@@ -1,6 +1,42 @@
-<h1>Data Residency Example</h1>
-<p>
-  <%= @greeting %>, Data Ranger!
-</p>
+<div class="login-buttons">
+  <h1>Data Residency Example</h1>
+  <p>
+    <%= @greeting %>, Data Ranger!
+  </p>
 
-<p><%= link_to "Login", new_user_session_path %> why don't ya?</p>
+
+  <%= link_to user_github_omniauth_authorize_path, class: "github-login-button" do %>
+    <i class="fab fa-github"></i> Sign in with GitHub
+  <% end %>
+  
+  <p>or</p>
+  
+  <p><%= link_to "Login", new_user_session_path %> why don't ya?</p>
+</div>
+
+<style>
+  .login-buttons {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .github-login-button {
+    display: inline-block;
+    background-color: #24292e;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .github-login-button:hover {
+    background-color: #2f363d;
+    color: white;
+  }
+  
+  .github-login-button i {
+    margin-right: 8px;
+  }
+</style>
