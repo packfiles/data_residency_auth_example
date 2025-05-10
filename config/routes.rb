@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get "home/index"
-  devise_for :users,
-    controllers: { omniauth_callbacks: "omniauth" }
+  devise_for :users, controllers: { omniauth_callbacks: "omniauth" }
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

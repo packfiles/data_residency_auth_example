@@ -1,42 +1,96 @@
-<div class="login-buttons">
-  <h1>Data Residency Example</h1>
-  <p>
-    <%= @greeting %>, Data Ranger!
-  </p>
-
-
-  <%= link_to user_github_omniauth_authorize_path, class: "github-login-button" do %>
-    <i class="fab fa-github"></i> Sign in with GitHub
-  <% end %>
-  
-  <p>or</p>
-  
-  <p><%= link_to "Login", new_user_session_path %> why don't ya?</p>
+<div class="page-wrapper">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h1 class="page-title text-center mb-4">Data Residency Example</h1>
+        
+        <% if user_signed_in? %>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <%= image_tag current_user.avatar_url, class: "rounded-circle", style: "width: 100px; height: 100px;" %>
+                </div>
+                <div class="flex-grow-1 ms-4">
+                  <h2 class="card-title mb-2"><i class="fa-brands fa-github"></i> <%= current_user.github_username %></h2>
+                  <p class="card-text text-muted mb-1">
+                    <i class="fas fa-envelope me-2"></i><%= current_user.email %>
+                  </p>
+                  <%= link_to 'Sign out', destroy_user_session_path, class: "btn btn-outline-danger mt-3", data: { turbo_method: :delete } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <div class="text-center">
+            <%= button_to user_github_omniauth_authorize_path, class: "btn btn-dark btn-lg", data: { turbo: false } do %>
+              <i class="fab fa-github me-2"></i> Sign in with GitHub
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
-  .login-buttons {
-    margin: 20px 0;
-    text-align: center;
+  .page-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+    padding: 2rem 0;
+  }
+
+  .page-title {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+  }
+
+  .page-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
+  }
+
+  .card {
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
   }
   
-  .github-login-button {
-    display: inline-block;
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .btn-dark {
     background-color: #24292e;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    border-color: #24292e;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  .github-login-button:hover {
+  .btn-dark:hover {
     background-color: #2f363d;
-    color: white;
+    border-color: #2f363d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-  
-  .github-login-button i {
-    margin-right: 8px;
+
+  .btn-outline-danger {
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.15);
   }
 </style>
