@@ -1,24 +1,24 @@
-# README
+# Data Residency Example
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This example project demonstrates how to have two OmniAuth configurations for
+two different versions of GitHub, regular github.com and ghe.com for data 
+residency customers.
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+- Ruby 3.4.3
+- OAuth API keys for `github.com` and an organization at `<subdomain>.ghe.com`.
+- add keys to your `.env` file
+- a domain other than localhost for OAuth callbacks
+  - localhost tunnel provider options:
+    - ngrok
+    - tailscale tunnel
+    - cloudflare
+  - update `config/environments/development.rb` with hostname(s)
 
-* System dependencies
+## Setup
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- `cp .env.example .env` and update credentials
+- update bundle config to access to Packfiles gem registry
+- run bin/setup
+- in a separate terminal connect localhost to tunnel, e.g., `tailscale funnel 3000`
