@@ -157,7 +157,7 @@ Devise.setup do |config|
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in
   # unconfirmed_email column, and copied to email column on successful confirmation.
-  config.reconfirmable = true
+  # config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [:email]
@@ -224,7 +224,7 @@ Devise.setup do |config|
   # Time interval you can reset your password with a reset password key.
   # Don't put a too small interval or your users won't have the time to
   # change their passwords.
-  config.reset_password_within = 6.hours
+  # config.reset_password_within = 6.hours
 
   # When set to false, does not sign a user in automatically after their password is
   # reset. Defaults to true, so a user is signed in automatically after a reset.
@@ -271,8 +271,20 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :github, ENV["GITHUB_CLIENT_ID"], ENV["GITHUB_CLIENT_SECRET"], scope: "read:user,user:email"
+  #
+  setup_proc = lambda do |env|
+    req = Rack::Request.new(env)
+    query_params = Rack::Utils.parse_nested_query(req.query_string).deep_symbolize_keys
+
+    Rails.logger.debug "!!!! request: #{req.inspect}"
+    Rails.logger.debug "@@@@@ query_params: #{query_params.inspect}"
+    Rails.logger.debug "##### env: #{env.inspect}"
+    env["omniauth.strategy"].options[:enterprise_options][:enterprise_subdomain] = query_params[:enterprise_subdomain] if query_params[:enterprise_subdomain]
+    env["omniauth.strategy"].options[:enterprise_options][:enterprise_subdomain] = query_params[:github_host].split(".").first if query_params[:github_host]
+  end
+
+  config.omniauth :github, ENV["GITHUB_CLIENT_ID"], ENV["GITHUB_CLIENT_SECRET"]
+  config.omniauth :githubdr, ENV["GITHUBDR_CLIENT_ID"], ENV["GITHUBDR_CLIENT_SECRET"], setup: setup_proc
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
