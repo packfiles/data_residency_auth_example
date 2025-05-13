@@ -7,20 +7,23 @@
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
-                  <%= image_tag @current_user_identity.identity_profile.avatar_url, class: "rounded-circle", style: "width: 100px; height: 100px;" %>
+                  <%= image_tag @current_user.current_identity.identity_profile.avatar_url, class: "rounded-circle", style: "width: 100px; height: 100px;" %>
                 </div>
                 <div class="flex-grow-1 ms-4">
-                  <h2 class="card-title mb-2"><i class="fa-brands fa-github"></i> <%= link_to @current_user_identity.identity_profile.username, @current_user_identity.identity_profile.uri, target: "_blank" %></h2>
+                  <h2 class="card-title mb-2"><i class="fa-brands fa-github"></i> <%= link_to @current_user.current_identity.identity_profile.username, @current_user.current_identity.identity_profile.uri, target: "_blank" %></h2>
                   <p class="card-text text-muted mb-1">
-                    <i class="fas fa-envelope me-2"></i><%= @user.email %>
+                    <i class="fas fa-envelope me-2" title="Email"></i><%= @user.email %>
                   </p>
                   <p class="card-text text-muted mb-1">
-                    <i class="fa-solid fa-id-badge me-2"></i><%= @current_user_identity.uid %>
+                    <i class="fa-solid fa-id-badge me-2" title="Provider Identity UID"></i><%= @current_user.current_identity.uid %>
                   </p>
                   <p class="card-text text-muted mb-1">
-                    <i class="fa-solid fa-at me-2"></i><%= @current_user_identity.provider %>
+                    <i class="fa-solid fa-at me-2" title="Provider name"></i><%= pretty_print_provider_name(@current_user.current_identity.provider) %>
                   </p>
-                  <%= link_to 'Sign out', destroy_user_session_path, class: "btn btn-outline-danger mt-3", data: { turbo_method: :delete } %>
+                  <p class="card-text text-muted mb-1">
+                    <i class="fa-solid fa-hashtag me-2" title="Identity ID"></i><%= @current_user.current_identity.id %>
+                  </p>
+                  <%= button_to 'Sign out', logout_path, class: "btn btn-outline-danger mt-3", data: { turbo: false }, method: :delete %>
                 </div>
               </div>
             </div>
