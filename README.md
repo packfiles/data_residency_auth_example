@@ -20,5 +20,6 @@ residency customers.
 
 - `cp .env.example .env` and update credentials
 - update bundle config to access to Packfiles gem registry
+  - `bundle config https://rubygems.pkg.github.com/packfiles USERNAME:personal_access_token_with_registry_access`
 - run bin/setup
 - in a separate terminal connect localhost to tunnel, e.g., `tailscale funnel 3000`
