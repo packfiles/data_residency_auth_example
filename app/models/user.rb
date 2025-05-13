@@ -7,6 +7,10 @@ class User < ApplicationRecord
 
   has_many :identities, dependent: :destroy
 
+  def current_identity
+    @current_identity ||= identities.find(current_identity_id)
+  end
+
   def self.from_omniauth(auth)
     if auth.present? && auth.provider.present? && auth.uid.present?
       identity = Identity.where(provider: auth.provider, uid: auth.uid).first_or_initialize
@@ -26,6 +30,9 @@ class User < ApplicationRecord
       identity.save!
 
       if identity.user.present?
+        identity.user.current_identity_id = identity.id
+        identity.user.save!
+
         identity.identity_profile = IdentityProfile.where(identity: identity).first_or_initialize
         identity.identity_profile.name = auth.info.name
         identity.identity_profile.avatar_url = auth.info.image
