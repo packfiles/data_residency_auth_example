@@ -407,6 +407,12 @@ GEM
       nokogiri (~> 1.8)
     zeitwerk (2.7.2)
 
+GEM
+  remote: https://rubygems.pkg.github.com/packfiles/
+  specs:
+    omniauth-github-data-residency (0.0.2)
+      omniauth-github (~> 2.0, >= 2.0.1)
+
 PLATFORMS
   aarch64-linux
   aarch64-linux-gnu
@@ -430,6 +436,7 @@ DEPENDENCIES
   kamal
   omniauth (~> 2.1)
   omniauth-github (~> 2.0)
+  omniauth-github-data-residency (~> 0.0.2)!
   omniauth-rails_csrf_protection
   propshaft
   puma (>= 5.0)
