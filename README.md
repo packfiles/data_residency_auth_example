@@ -17,22 +17,27 @@ This project demonstrates the implementation of dual OmniAuth provider configura
 ## Configuration
 
 1. Create and configure environment variables:
+
    ```bash
    cp .env.example .env
    ```
+
    Update the `.env` file with your OAuth credentials.
 
 2. Configure Bundler to access the Packfiles gem registry:
+
    ```bash
    bundle config https://rubygems.pkg.github.com/packfiles USERNAME:personal_access_token_with_registry_access
    ```
 
 3. Initialize the project:
+
    ```bash
    bin/setup
    ```
 
 4. Set up a tunnel for local development:
+
    ```bash
    tailscale funnel 3000
    ```
@@ -40,3 +45,7 @@ This project demonstrates the implementation of dual OmniAuth provider configura
 ## Development Environment
 
 Update `config/environments/development.rb` with your tunnel hostname(s) to enable OAuth callback functionality.
+
+---
+
+Made with :heart: by [Packfiles :package:](https://packfiles.io)
