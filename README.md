@@ -1,25 +1,42 @@
 # Data Residency Example
 
-This example project demonstrates how to have two OmniAuth configurations for
-two different versions of GitHub, regular github.com and ghe.com for data 
-residency customers.
+This project demonstrates the implementation of dual OmniAuth provider configurations for GitHub authentication, supporting both standard GitHub.com and GitHub Enterprise Cloud (GHE) instances for data residency requirements.
 
-## Requirements
+## Prerequisites
 
 - Ruby 3.4.3
-- OAuth API keys for `github.com` and an organization at `<subdomain>.ghe.com`.
-- add keys to your `.env` file
-- a domain other than localhost for OAuth callbacks
-  - localhost tunnel provider options:
+- OAuth API credentials:
+  - GitHub.com API keys
+  - GitHub Enterprise API keys for your organization (`<subdomain>.ghe.com`)
+- A public-facing domain for OAuth callbacks
+  - Recommended tunnel solutions:
     - ngrok
-    - tailscale tunnel
-    - cloudflare
-  - update `config/environments/development.rb` with hostname(s)
+    - Tailscale Funnel
+    - Cloudflare Tunnel
 
-## Setup
+## Configuration
 
-- `cp .env.example .env` and update credentials
-- update bundle config to access to Packfiles gem registry
-  - `bundle config https://rubygems.pkg.github.com/packfiles USERNAME:personal_access_token_with_registry_access`
-- run bin/setup
-- in a separate terminal connect localhost to tunnel, e.g., `tailscale funnel 3000`
+1. Create and configure environment variables:
+   ```bash
+   cp .env.example .env
+   ```
+   Update the `.env` file with your OAuth credentials.
+
+2. Configure Bundler to access the Packfiles gem registry:
+   ```bash
+   bundle config https://rubygems.pkg.github.com/packfiles USERNAME:personal_access_token_with_registry_access
+   ```
+
+3. Initialize the project:
+   ```bash
+   bin/setup
+   ```
+
+4. Set up a tunnel for local development:
+   ```bash
+   tailscale funnel 3000
+   ```
+
+## Development Environment
+
+Update `config/environments/development.rb` with your tunnel hostname(s) to enable OAuth callback functionality.
