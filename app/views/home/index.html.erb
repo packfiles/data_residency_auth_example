@@ -1,12 +1,42 @@
-<div class="page-wrapper">
+<div class="page-wrapper" data-controller="home">
   <div class="container py-5">
     <div class="row justify-content-center">
       <div class="col-md-8">
         <h1 class="page-title text-center mb-4">Data Residency Example</h1>
           <div class="text-center">
-            <%= button_to user_github_omniauth_authorize_path, class: "btn btn-dark btn-lg", data: { turbo: false } do %>
+            <%= button_to user_github_omniauth_authorize_path, class: "btn btn-primary btn-lg", data: { turbo: false, home_target: "providerGithub" } do %>
               <i class="fab fa-github me-2"></i> Sign in with GitHub
             <% end %>
+            
+            <br>
+
+            <div>
+              <p data-home-target="linkContainer">
+                or with
+                <a href="#" data-home-target="showFormLink" data-action="click->home#showForm:prevent" class="text-orange-700 hover:text-primary">
+                  GitHub Enterprise Cloud with Data Residency
+                </a>
+              </p>
+
+              <div class="form-group mb-4 text-center" data-home-target="formContainer" hidden>
+                <label for="enterprise_subdomain" class="form-label d-block mb-2">To login, please enter your enterprise subdomain first:</label>
+                <div class="d-flex justify-content-center mb-4">
+                  <input type="text"
+                         id="enterprise_subdomain"
+                         data-home-target="input"
+                         data-action="input->home#check"
+                         class="form-control w-50"
+                         placeholder="your-enterprise-subdomain">
+                </div>
+              </div>
+              <div class="d-flex justify-content-center" data-home-target="providerGithub_data_residency-button">
+                <%= button_to user_githubdr_omniauth_authorize_path, class: "btn btn-secondary btn-lg", 
+                      data: { turbo: false, 
+                              enterprise_target_url: user_githubdr_omniauth_authorize_path, 
+                              home_target: "providerGithub_data_residency" }, hidden: true do %>
+                  <i class="fab fa-github me-2"></i> Sign in with GitHub Data Residency
+                <% end %>
+            </div>
           </div>
       </div>
     </div>
