@@ -46,6 +46,11 @@ This project demonstrates the implementation of dual OmniAuth provider configura
 
 Update `config/environments/development.rb` with your tunnel hostname(s) to enable OAuth callback functionality.
 
+
+## Demo
+
+https://github.com/user-attachments/assets/a37f3277-e88b-4523-ab5e-77ad174720c0
+
 ---
 
 Made with :heart: by [Packfiles :package:](https://packfiles.io)
